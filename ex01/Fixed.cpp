@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Fixed.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yu-chen <yu-chen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/07 17:15:35 by yu-chen           #+#    #+#             */
+/*   Updated: 2024/08/07 17:15:36 by yu-chen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Fixed.hpp"
 
 Fixed::Fixed():fixed_point_nbr(0)
@@ -12,7 +24,7 @@ Fixed::Fixed(const int n){
 
 Fixed::Fixed(const float f){
     std::cout << "Float constructor called" << std::endl;
-    fixed_point_nbr = static_cast<int>(roundf(f * (1 << fractional_bits));
+    fixed_point_nbr = static_cast<int>(roundf(f * (1 << fractional_bits)));
 }
 
 Fixed::Fixed(const Fixed &other)
@@ -24,8 +36,8 @@ Fixed::Fixed(const Fixed &other)
 Fixed &Fixed::operator = (const Fixed &other)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
-	if (this!=&other)
-		this->fixed_point_nbr = other.getRawBits();
+	if (this != &other)
+		this->fixed_point_nbr = other.fixed_point_nbr;
 	return (*this);
 }
 
