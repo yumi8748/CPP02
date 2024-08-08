@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumi <yumi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yu-chen <yu-chen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:59:47 by yu-chen           #+#    #+#             */
-/*   Updated: 2024/08/05 15:08:15 by yumi             ###   ########.fr       */
+/*   Updated: 2024/08/08 17:01:51 by yu-chen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,5 @@ public:
 	int getRawBits( void ) const;
 	void setRawBits( int const raw );
 };
-
-
-
 
 #endif

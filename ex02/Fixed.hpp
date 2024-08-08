@@ -6,7 +6,7 @@
 /*   By: yu-chen <yu-chen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 17:15:44 by yu-chen           #+#    #+#             */
-/*   Updated: 2024/08/07 19:55:28 by yu-chen          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:52:07 by yu-chen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ class Fixed
 {
   private:
 	int fixed_point_nbr;
-	static const int fractional_bits;
+	static const int fractional_bits = 8;
 
   public:
 	Fixed();

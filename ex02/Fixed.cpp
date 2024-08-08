@@ -6,7 +6,7 @@
 /*   By: yu-chen <yu-chen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 17:15:43 by yu-chen           #+#    #+#             */
-/*   Updated: 2024/08/07 19:53:49 by yu-chen          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:36:45 by yu-chen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,62 @@ Fixed Fixed::operator*(const Fixed &n2) const{
 }
 
 Fixed Fixed::operator/(const Fixed &n2) const{
-	//0
+	if (n2.fixed_point_nbr == 0)
+		throw ("cannot be diveded by 0");//error
 	return Fixed(this->toFloat() / n2.toFloat());
 }
 
-Fixed &Fixed::operator++();   // Pre-increment
-Fixed Fixed::operator++(int); // Post-increment
-Fixed &Fixed::operator--();   // Pre-decrement
-Fixed Fixed::operator--(int); // Post-decrement
+Fixed &Fixed::operator++(){
+	this->fixed_point_nbr++;
+	return *this;
+}   // Pre-increment
+Fixed Fixed::operator++(int){
+	Fixed	tmp(*this);
+	this->fixed_point_nbr += 1;
+	return (tmp);
+} // Post-increment
+Fixed &Fixed::operator--(){
+	this->fixed_point_nbr--;
+	return (*this);
+}   // Pre-decrement
+Fixed Fixed::operator--(int){
+	Fixed	tmp(*this);
+	this->fixed_point_nbr -= 1;
+	return (tmp);
+} // Post-decrement
 
-static Fixed &Fixed::min(Fixed &n1, Fixed &n2);
-static const Fixed &Fixed::min(const Fixed &n1, const Fixed &n2);
-static Fixed &Fixed::max(Fixed &n1, Fixed &n2);
-static const Fixed &Fixed::max(const Fixed &n1, const Fixed &n2);
+Fixed &Fixed::min(Fixed &n1, Fixed &n2){
+	return ((n1 < n2) ? n1 : n2);
+}
 
-int		Fixed::getRawBits(void) const;
-void	Fixed::setRawBits(int const raw);
-float	Fixed::toFloat(void) const;
-int		Fixed::toInt(void) const;
+const Fixed &Fixed::min(const Fixed &n1, const Fixed &n2){
+	return ((n1 < n2) ? n1 : n2);
+}
 
-std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
+Fixed &Fixed::max(Fixed &n1, Fixed &n2){
+	return ((n1 > n2) ? n1 : n2);
+}
+
+const Fixed &Fixed::max(const Fixed &n1, const Fixed &n2){
+	return ((n1 > n2) ? n1 : n2);
+}
+
+int		Fixed::getRawBits(void) const{
+	return (this->fixed_point_nbr);
+}
+void	Fixed::setRawBits(int const raw){
+	this->fixed_point_nbr = raw;
+}
+
+float	Fixed::toFloat(void) const{
+	return static_cast<float>(fixed_point_nbr) / (1 << fractional_bits);
+}
+
+int		Fixed::toInt(void) const{
+	return fixed_point_nbr >> fractional_bits;
+}
+
+std::ostream &operator<<(std::ostream &os, const Fixed &fixed){
+	os << fixed.toFloat();
+	return (os);
+}
