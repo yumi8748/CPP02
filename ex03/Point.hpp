@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Point.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yu-chen <yu-chen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yumi <yumi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:56:54 by yu-chen           #+#    #+#             */
-/*   Updated: 2024/08/08 17:52:58 by yu-chen          ###   ########.fr       */
+/*   Updated: 2024/08/10 16:09:05 by yumi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ private:
     const Fixed y;
 public:
     Point();
-    Point(float x, float y);
+    Point(float const x_value, float const y_value);
     Point(const Point &other);
     Point &operator = (const Point &other);
     ~Point();
+    const Fixed get_x() const;
+    const Fixed get_y() const;
 };
 
 bool bsp( Point const a, Point const b, Point const c, Point const point);
