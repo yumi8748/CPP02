@@ -6,67 +6,127 @@
 /*   By: yumi <yumi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:56:48 by yu-chen           #+#    #+#             */
-/*   Updated: 2024/08/10 17:10:22 by yumi             ###   ########.fr       */
+/*   Updated: 2024/08/12 12:53:27 by yumi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Point.hpp"
 
-Fixed::Fixed():fixed_point_nbr(0)
-{
-	std::cout << "Default constructor called" << std::endl;
+Fixed::Fixed():fixed_point_nbr(0){};
+
+Fixed::Fixed(const Fixed& other) {
+    *this = other;
 }
 
 Fixed::Fixed(const int n){
-    std::cout << "Int constructor called" << std::endl;
-    fixed_point_nbr = n << fractional_bits;
+	fixed_point_nbr = n << fractional_bits;	
 }
 
 Fixed::Fixed(const float f){
-    std::cout << "Float constructor called" << std::endl;
-    fixed_point_nbr = static_cast<int>(roundf(f * (1 << fractional_bits)));
+	fixed_point_nbr = roundf(f * (1 << fractional_bits));
 }
 
-Fixed::Fixed(const Fixed &other)
-{
-	std::cout << "Copy constructor calle" << std::endl;
-	*this = other;
-}
+Fixed::~Fixed(){}
 
-Fixed &Fixed::operator = (const Fixed &other)
-{
-	std::cout << "Copy assignment operator called" << std::endl;
+Fixed &Fixed::operator = (const Fixed &other){
 	if (this != &other)
-		this->fixed_point_nbr = other.fixed_point_nbr;
+	{
+		fixed_point_nbr = other.getRawBits();
+	}
+	return *this;
+}
+
+bool Fixed::operator>(const Fixed &n2) const{
+	return fixed_point_nbr > n2.fixed_point_nbr;
+}
+
+bool Fixed::operator<(const Fixed &n2) const{
+	return fixed_point_nbr < n2.fixed_point_nbr;
+}
+bool Fixed::operator>=(const Fixed &n2) const{
+	return fixed_point_nbr >= n2.fixed_point_nbr;
+}
+
+bool Fixed::operator<=(const Fixed &n2) const{
+	return fixed_point_nbr <= n2.fixed_point_nbr;
+}
+
+bool Fixed::operator==(const Fixed &n2) const{
+	return fixed_point_nbr == n2.fixed_point_nbr;
+}
+
+bool Fixed::operator!=(const Fixed &n2) const{
+	return fixed_point_nbr != n2.fixed_point_nbr;
+}
+
+Fixed Fixed::operator+(const Fixed &n2) const{
+	return Fixed(this->toFloat() + n2.toFloat());
+}
+
+Fixed Fixed::operator-(const Fixed &n2) const{
+	return Fixed(this->toFloat() - n2.toFloat());
+}
+Fixed Fixed::operator*(const Fixed &n2) const{
+	return Fixed(this->toFloat() * n2.toFloat());	
+}
+
+Fixed Fixed::operator/(const Fixed &n2) const{
+	if (n2.fixed_point_nbr == 0)
+		throw ("cannot be diveded by 0");//error
+	return Fixed(this->toFloat() / n2.toFloat());
+}
+
+Fixed &Fixed::operator++(){
+	this->fixed_point_nbr++;
+	return *this;
+}   // Pre-increment
+Fixed Fixed::operator++(int){
+	Fixed	tmp(*this);
+	this->fixed_point_nbr += 1;
+	return (tmp);
+} // Post-increment
+Fixed &Fixed::operator--(){
+	this->fixed_point_nbr--;
 	return (*this);
+}   // Pre-decrement
+Fixed Fixed::operator--(int){
+	Fixed	tmp(*this);
+	this->fixed_point_nbr -= 1;
+	return (tmp);
+} // Post-decrement
+
+Fixed &Fixed::min(Fixed &n1, Fixed &n2){
+	return ((n1 < n2) ? n1 : n2);
 }
 
-Fixed::~Fixed()
-{
-	std::cout << "Destructor called" << std::endl;
+const Fixed &Fixed::min(const Fixed &n1, const Fixed &n2){
+	return ((n1 < n2) ? n1 : n2);
 }
 
-int	Fixed::getRawBits( void ) const
-{
-	std::cout << "getRawBits member function called" << std::endl;
+Fixed &Fixed::max(Fixed &n1, Fixed &n2){
+	return ((n1 > n2) ? n1 : n2);
+}
+
+const Fixed &Fixed::max(const Fixed &n1, const Fixed &n2){
+	return ((n1 > n2) ? n1 : n2);
+}
+
+int		Fixed::getRawBits(void) const{
 	return (this->fixed_point_nbr);
 }
-
-void Fixed::setRawBits( int const raw )
-{
-	std::cout << "setRawBits member function called" << std::endl;
+void	Fixed::setRawBits(int const raw){
 	this->fixed_point_nbr = raw;
 }
 
-float Fixed::toFloat(void) const{
-    return static_cast<float>(fixed_point_nbr) / (1 << fractional_bits);
+float	Fixed::toFloat(void) const{
+	return static_cast<float>(fixed_point_nbr) / (1 << fractional_bits);
 }
 
-int Fixed::toInt(void) const{
-    return fixed_point_nbr >> fractional_bits;
+int		Fixed::toInt(void) const{
+	return fixed_point_nbr >> fractional_bits;
 }
 
-std::ostream& operator<<(std::ostream& os, const Fixed& fixed){
-    os << fixed.toFloat();
-    return (os);
+std::ostream &operator<<(std::ostream &os, const Fixed &fixed){
+	os << fixed.toFloat();
+	return (os);
 }

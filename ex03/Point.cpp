@@ -6,7 +6,7 @@
 /*   By: yumi <yumi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:56:53 by yu-chen           #+#    #+#             */
-/*   Updated: 2024/08/10 16:17:27 by yumi             ###   ########.fr       */
+/*   Updated: 2024/08/12 13:52:09 by yumi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ Fixed const  Point::get_y() const{
     return this->y;
 }
 
+bool Point::operator==(const Point &other) const {
+    return this->x == other.x && this->y == other.y;
+}
 
 
